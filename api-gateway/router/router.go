@@ -12,7 +12,6 @@ func SetupRoutes(r *gin.Engine) {
 	// Placeholder routes
 	api := r.Group("/api")
 	{
-		api.GET("/jobs", handlers.GetJobs)
 		api.POST("/login", handlers.Login)
 		api.POST("/register", handlers.Register)
 	}

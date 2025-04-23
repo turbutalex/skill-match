@@ -1,0 +1,15 @@
+# syntax=docker/dockerfile:1
+FROM golang:1.24-alpine
+
+WORKDIR /auth-service
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+RUN go build -o auth-service .
+
+EXPOSE 8081
+
+CMD ["go", "run", "main.go"]

@@ -1,24 +1,37 @@
 package handlers
 
 import (
+	"bytes"
 	"github.com/gin-gonic/gin"
+	"io"
 	"net/http"
 )
 
-func GetJobs(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "List of jobs (placeholder)",
-	})
-}
+const authServiceURL = "http://localhost:8081"
 
 func Login(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Login route (placeholder)",
-	})
+	forwardRequest(c, "/api/login")
 }
 
 func Register(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Register route (placeholder)",
-	})
+	forwardRequest(c, "/api/register")
+}
+
+func forwardRequest(c *gin.Context, path string) {
+
+	bodyBytes, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid body"})
+		return
+	}
+
+	resp, err := http.Post(authServiceURL+path, "application/json", bytes.NewBuffer(bodyBytes))
+	if err != nil {
+		c.JSON(http.StatusServiceUnavailable, gin.H{"error": "auth service unreachable"})
+		return
+	}
+	defer resp.Body.Close()
+
+	respBody, _ := io.ReadAll(resp.Body)
+	c.Data(resp.StatusCode, "application/json", respBody)
 }

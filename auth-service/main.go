@@ -1,12 +1,14 @@
 package main
 
 import (
+	"auth-service/database"
 	"auth-service/router"
 	"github.com/gin-gonic/gin"
 	"log"
 )
 
 func main() {
+	database.InitDB()
 	r := gin.Default()
 
 	router.SetupRoutes(r)
