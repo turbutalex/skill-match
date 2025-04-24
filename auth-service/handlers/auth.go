@@ -63,3 +63,14 @@ func Login(c *gin.Context) {
 		"token":   token,
 	})
 }
+
+func Profile(ctx *gin.Context) {
+	userID := ctx.GetInt("user_id")
+	email := ctx.GetString("email")
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "Access granted",
+		"user_id": userID,
+		"email":   email,
+	})
+}

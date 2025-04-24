@@ -17,6 +17,10 @@ func Register(c *gin.Context) {
 	forwardRequest(c, "/api/register")
 }
 
+func Profile(c *gin.Context) {
+	forwardRequest(c, "/api/profile")
+}
+
 func forwardRequest(c *gin.Context, path string) {
 
 	bodyBytes, err := io.ReadAll(c.Request.Body)
