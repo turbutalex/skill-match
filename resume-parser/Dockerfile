@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
 FROM golang:1.24-alpine
 
-WORKDIR /auth-service
+WORKDIR /resume-parser
 
 RUN go mod download
 
-RUN go build -o auth-service .
+RUN go build -o resume-parser .
 
-EXPOSE 8081
+EXPOSE 8082
 
 CMD ["go", "run", "main.go"]

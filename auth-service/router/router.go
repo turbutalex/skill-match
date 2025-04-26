@@ -1,7 +1,7 @@
 package router
 
 import (
-	"auth-service/handlers"
+	"auth-service/controllers"
 	"auth-service/middleware"
 	"github.com/gin-gonic/gin"
 )
@@ -10,10 +10,11 @@ func SetupRoutes(r *gin.Engine) {
 
 	api := r.Group("/api")
 	{
-		api.POST("/login", handlers.Login)
-		api.POST("/register", handlers.Register)
+		api.POST("/login", controllers.Login)
+		api.POST("/register", controllers.Register)
 
 		api.Use(middleware.AuthMiddleware())
-		api.GET("/profile", handlers.Profile)
+		api.GET("/profile", controllers.Profile)
+		api.GET("/me", controllers.GetCurrentUser)
 	}
 }

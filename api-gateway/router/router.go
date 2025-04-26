@@ -1,19 +1,20 @@
 package router
 
 import (
-	"api-gateway/handlers"
+	"api-gateway/controllers"
 	"github.com/gin-gonic/gin"
 )
 
 func SetupRoutes(r *gin.Engine) {
 	// Health check
-	r.GET("/health", handlers.HealthCheck)
+	r.GET("/health", controllers.HealthCheck)
 
 	// Placeholder routes
 	api := r.Group("/api")
 	{
-		api.POST("/login", handlers.Login)
-		api.POST("/register", handlers.Register)
-		api.GET("/profile", handlers.Profile)
+		api.POST("/login", controllers.Login)
+		api.POST("/register", controllers.Register)
+		api.GET("/profile", controllers.Profile)
+		api.GET("/me", controllers.Me)
 	}
 }
