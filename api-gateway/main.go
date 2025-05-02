@@ -2,12 +2,14 @@ package main
 
 import (
 	"api-gateway/router"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"log"
 )
 
 func main() {
 	r := gin.Default()
+	r.Use(cors.Default())
 
 	router.SetupRoutes(r)
 

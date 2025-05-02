@@ -8,24 +8,9 @@ import (
 )
 
 const authServiceURL = "http://localhost:8081"
+const resumeServiceURL = "http://localhost:8082"
 
-func Login(c *gin.Context) {
-	forwardPOSTRequest(c, "/api/login")
-}
-
-func Register(c *gin.Context) {
-	forwardPOSTRequest(c, "/api/register")
-}
-
-func Profile(c *gin.Context) {
-	forwardPOSTRequest(c, "/api/profile")
-}
-
-func Me(c *gin.Context) {
-	forwardGETRequest(c, "/api/me")
-}
-
-func forwardPOSTRequest(c *gin.Context, path string) {
+func forwardPOSTRequest(c *gin.Context, path string, baseURL string, contentType string) {
 
 	bodyBytes, err := io.ReadAll(c.Request.Body)
 	if err != nil {
@@ -33,7 +18,7 @@ func forwardPOSTRequest(c *gin.Context, path string) {
 		return
 	}
 
-	resp, err := http.Post(authServiceURL+path, "application/json", bytes.NewBuffer(bodyBytes))
+	resp, err := http.Post(baseURL+path, contentType, bytes.NewBuffer(bodyBytes))
 	if err != nil {
 		c.JSON(http.StatusServiceUnavailable, gin.H{"error": "auth service unreachable"})
 		return
@@ -44,8 +29,8 @@ func forwardPOSTRequest(c *gin.Context, path string) {
 	c.Data(resp.StatusCode, "application/json", respBody)
 }
 
-func forwardGETRequest(c *gin.Context, path string) {
-	req, err := http.NewRequest("GET", authServiceURL+path, nil)
+func forwardGETRequest(c *gin.Context, path string, baseURL string) {
+	req, err := http.NewRequest("GET", baseURL+path, nil)
 	if err != nil {
 		c.JSON(http.StatusServiceUnavailable, gin.H{"error": "Encountered error while building request " + err.Error()})
 		return

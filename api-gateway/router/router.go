@@ -16,5 +16,6 @@ func SetupRoutes(r *gin.Engine) {
 		api.POST("/register", controllers.Register)
 		api.GET("/profile", controllers.Profile)
 		api.GET("/me", controllers.Me)
+		api.POST("/resume", controllers.Upload)
 	}
 }

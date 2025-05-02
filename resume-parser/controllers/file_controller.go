@@ -12,6 +12,10 @@ import (
 )
 
 func UploadResume(c *gin.Context) {
+	content := c.GetHeader("Content-Type")
+	boundary := c.GetHeader("Boundary")
+	print(content, boundary)
+
 	file, err := c.FormFile("resume")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "File is required"})

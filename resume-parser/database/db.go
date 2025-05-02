@@ -12,16 +12,12 @@ import (
 var ResumeCollection *mongo.Collection
 
 func Connect() {
-	clientOptions := options.Client().ApplyURI("mongodb://mongo:27017") // Change as needed
-	client, err := mongo.NewClient(clientOptions)
-	if err != nil {
-		log.Fatal(err)
-	}
+	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017") // Change as needed
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	err = client.Connect(ctx)
+	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
 		log.Fatal(err)
 	}

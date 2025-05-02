@@ -3,6 +3,7 @@ package main
 import (
 	"auth-service/database"
 	"auth-service/router"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"log"
 )
@@ -10,6 +11,7 @@ import (
 func main() {
 	database.InitDB()
 	r := gin.Default()
+	r.Use(cors.Default())
 
 	router.SetupRoutes(r)
 
