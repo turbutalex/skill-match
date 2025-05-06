@@ -5,10 +5,15 @@ import (
 	"auth-service/router"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"log"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
 	database.InitDB()
 	r := gin.Default()
 	r.Use(cors.Default())

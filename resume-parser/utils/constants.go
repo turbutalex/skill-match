@@ -1,0 +1,7 @@
+package utils
+
+const (
+	PDF_APIKEY = "UNIPDF_APIKEY"
+	LLM_APIKEY = "LLM_APIKEY"
+	LLM_APIURL = "LLM_APIURL"
+)

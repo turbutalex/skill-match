@@ -23,12 +23,12 @@ func UploadResume(c *gin.Context) {
 	}
 
 	filePath := filepath.Join("uploads", file.Filename)
-	//if err := c.SaveUploadedFile(file, filePath); err != nil {
-	//	c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file"})
-	//	return
-	//}
+	if err := c.SaveUploadedFile(file, filePath); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file"})
+		return
+	}
 
-	text, parseResult := parser.Extract(filePath)
+	text, parseResult, err := parser.Extract(filePath)
 
 	resume := models.Resume{
 		FileName:   file.Filename,
